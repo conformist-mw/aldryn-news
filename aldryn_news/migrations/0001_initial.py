@@ -55,7 +55,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('cmsplugin_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
                 ('latest_entries', models.PositiveSmallIntegerField(default=5, help_text='The number of latests entries to be displayed.')),
-                ('type_list', models.CharField(default=b'full', max_length=255, verbose_name='Type of list', choices=[(b'full', 'Full list'), (b'simple', 'Simple list')])),
+                ('type_list', models.CharField(default='full', max_length=255, verbose_name='Type of list', choices=[('full', 'Full list'), ('simple', 'Simple list')])),
             ],
             options={
                 'abstract': False,
@@ -69,7 +69,7 @@ class Migration(migrations.Migration):
                 ('publication_start', models.DateTimeField(default=datetime.datetime.now, help_text='Used in the URL. If changed, the URL will change.', verbose_name='Published Since')),
                 ('publication_end', models.DateTimeField(null=True, verbose_name='Published Until', blank=True)),
                 ('category', models.ForeignKey(blank=True, to='aldryn_news.Category', help_text='WARNING! Used in the URL. If changed, the URL will change.', null=True, verbose_name='Category')),
-                ('content', cms.models.fields.PlaceholderField(slotname=b'blog_post_content', editable=False, to='cms.Placeholder', null=True)),
+                ('content', cms.models.fields.PlaceholderField(slotname='blog_post_content', editable=False, to='cms.Placeholder', null=True)),
                 ('key_visual', filer.fields.image.FilerImageField(verbose_name='Key Visual', blank=True, to='filer.Image', null=True)),
             ],
             options={
