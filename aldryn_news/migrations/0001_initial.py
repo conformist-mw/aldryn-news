@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255, verbose_name='Name')),
                 ('slug', models.SlugField(help_text='Auto-generated. Clean it to have it re-created. WARNING! Used in the URL. If changed, the URL will change. ', max_length=255, verbose_name='Slug', blank=True)),
                 ('language_code', models.CharField(max_length=15, db_index=True)),
-                ('master', models.ForeignKey(related_name='translations', editable=False, to='aldryn_news.Category', null=True)),
+                ('master', models.ForeignKey(related_name='translations', editable=False, to='aldryn_news.Category', null=True, on_delete=models.deletion.CASCADE)),
             ],
             options={
                 'managed': True,
@@ -53,7 +53,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='LatestNewsPlugin',
             fields=[
-                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
+                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin', on_delete=models.deletion.CASCADE)),
                 ('latest_entries', models.PositiveSmallIntegerField(default=5, help_text='The number of latests entries to be displayed.')),
                 ('type_list', models.CharField(default='full', max_length=255, verbose_name='Type of list', choices=[('full', 'Full list'), ('simple', 'Simple list')])),
             ],
@@ -68,7 +68,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('publication_start', models.DateTimeField(default=datetime.datetime.now, help_text='Used in the URL. If changed, the URL will change.', verbose_name='Published Since')),
                 ('publication_end', models.DateTimeField(null=True, verbose_name='Published Until', blank=True)),
-                ('category', models.ForeignKey(blank=True, to='aldryn_news.Category', help_text='WARNING! Used in the URL. If changed, the URL will change.', null=True, verbose_name='Category')),
+                ('category', models.ForeignKey(blank=True, to='aldryn_news.Category', help_text='WARNING! Used in the URL. If changed, the URL will change.', null=True, verbose_name='Category', on_delete=models.deletion.CASCADE)),
                 ('content', cms.models.fields.PlaceholderField(slotname='blog_post_content', editable=False, to='cms.Placeholder', null=True)),
                 ('key_visual', filer.fields.image.FilerImageField(verbose_name='Key Visual', blank=True, to='filer.Image', null=True)),
             ],
@@ -82,7 +82,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='NewsLinksPlugin',
             fields=[
-                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
+                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin', on_delete=models.deletion.CASCADE)),
                 ('news', models.ManyToManyField(to='aldryn_news.News', verbose_name='News')),
             ],
             options={
@@ -98,7 +98,7 @@ class Migration(migrations.Migration):
                 ('slug', models.CharField(help_text='Auto-generated. Clean it to have it re-created. WARNING! Used in the URL. If changed, the URL will change. ', max_length=255, verbose_name='Slug', blank=True)),
                 ('lead_in', djangocms_text_ckeditor.fields.HTMLField(help_text='Will be displayed in lists, and at the start of the detail page', verbose_name='Lead-in')),
                 ('language_code', models.CharField(max_length=15, db_index=True)),
-                ('master', models.ForeignKey(related_name='translations', editable=False, to='aldryn_news.News', null=True)),
+                ('master', models.ForeignKey(related_name='translations', editable=False, to='aldryn_news.News', null=True, on_delete=models.deletion.CASCADE)),
             ],
             options={
                 'managed': True,
@@ -124,8 +124,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('object_id', models.IntegerField(verbose_name='Object id', db_index=True)),
-                ('content_type', models.ForeignKey(related_name='aldryn_news_taggeditem_tagged_items', verbose_name='Content type', to='contenttypes.ContentType')),
-                ('tag', models.ForeignKey(related_name='aldryn_news_taggeditem_items', to='aldryn_news.Tag')),
+                ('content_type', models.ForeignKey(related_name='aldryn_news_taggeditem_tagged_items', verbose_name='Content type', to='contenttypes.ContentType', on_delete=models.deletion.CASCADE)),
+                ('tag', models.ForeignKey(related_name='aldryn_news_taggeditem_items', to='aldryn_news.Tag', on_delete=models.deletion.CASCADE)),
             ],
             options={
                 'verbose_name': 'Tagged Item',
@@ -140,7 +140,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255, verbose_name='Name')),
                 ('slug', models.SlugField(max_length=100, verbose_name='Slug')),
                 ('language_code', models.CharField(max_length=15, db_index=True)),
-                ('master', models.ForeignKey(related_name='translations', editable=False, to='aldryn_news.Tag', null=True)),
+                ('master', models.ForeignKey(related_name='translations', editable=False, to='aldryn_news.Tag', null=True, on_delete=models.deletion.CASCADE)),
             ],
             options={
                 'managed': True,

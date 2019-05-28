@@ -2,23 +2,16 @@
 from aldryn_search.utils import get_index_base, strip_tags
 from cms.plugin_rendering import ContentRenderer
 from django.conf import settings
-from django.template import RequestContext
+from sekizai.context import SekizaiContext
 
 from aldryn_news.models import News
 
 
 def render_plugin(request, plugin_instance):
-    # https://github.com/divio/aldryn-newsblog/issues/482
-    if getattr(plugin_instance, 'render_plugin', None):
-        # Backward compatibility for django-cms<3.4
-        return plugin_instance.render_plugin(
-            context=RequestContext(request),
-        )
-    else:
-        renderer = ContentRenderer(request)
-        context = RequestContext(request)
-        context['request'] = request
-        return renderer.render_plugin(plugin_instance, context)
+    renderer = ContentRenderer(request)
+    context = SekizaiContext(request)
+    context['request'] = request
+    return renderer.render_plugin(plugin_instance, context)
 
 
 class NewsIndex(get_index_base()):

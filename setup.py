@@ -15,11 +15,11 @@ REQUIREMENTS = [
 CLASSIFIERS = [
     'Development Status :: 2 - Pre-Alpha',
     'Environment :: Web Environment',
-    'Framework :: Django',
+    'Framework :: Django :: 1.11',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: BSD License',
     'Operating System :: OS Independent',
-    'Programming Language :: Python',
+    'Programming Language :: Python :: 3.6',
     'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     'Topic :: Software Development',
     'Topic :: Software Development :: Libraries :: Application Frameworks',
