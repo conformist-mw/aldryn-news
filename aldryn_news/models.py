@@ -6,7 +6,7 @@ from cms.models.pluginmodel import CMSPlugin
 from cms.utils.i18n import get_current_language
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.core.urlresolvers import NoReverseMatch, reverse
+from django.urls import NoReverseMatch, reverse
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.utils.translation import override, ugettext_lazy as _
@@ -152,14 +152,18 @@ class News(TranslatableModel):
         lead_in=HTMLField(_('Lead-in'),
                           help_text=_('Will be displayed in lists, and at the start of the detail page'))
     )
-    key_visual = FilerImageField(verbose_name=_('Key Visual'), blank=True, null=True)
+    key_visual = FilerImageField(verbose_name=_('Key Visual'), blank=True, null=True, on_delete=models.SET_NULL)
     content = PlaceholderField('blog_post_content')
     publication_start = models.DateTimeField(_('Published Since'), default=datetime.datetime.now,
                                              help_text=_('Used in the URL. If changed, the URL will change.'))
     publication_end = models.DateTimeField(_('Published Until'), null=True, blank=True)
-    category = models.ForeignKey(Category, verbose_name=_('Category'), blank=True, null=True,
-                                 help_text=_('WARNING! Used in the URL. If changed, the URL will change.',
-                                 on_delete=models.deletion.CASCADE))
+    category = models.ForeignKey(
+        Category, verbose_name=_('Category'),
+        blank=True,
+        null=True,
+        help_text=_('WARNING! Used in the URL. If changed, the URL will change.'),
+        on_delete=models.deletion.CASCADE
+    )
     objects = RelatedManager()
     published = PublishedManager()
     tags = TaggableManager(blank=True, through=TaggedItem, manager=CustomTaggableManager)

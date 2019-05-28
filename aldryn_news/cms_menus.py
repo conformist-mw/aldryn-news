@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from cms.menu_bases import CMSAttachMenu
-from django.core.urlresolvers import NoReverseMatch
+from django.urls import NoReverseMatch
 from django.db.models.signals import post_delete, post_save
 from django.utils.translation import ugettext_lazy as _
 from menus.base import NavigationNode
